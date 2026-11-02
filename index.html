@@ -1,0 +1,4160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WayaTronic | Your Trusted Electronic Test Equipment Store</title>
+  <meta name="description" content="Sri Lanka's premier destination for digital multimeters, oscilloscopes, test kits, Arduino, ESP32, power supplies, and electronic components.">
+  
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* ==========================================================================
+       1. CSS VARIABLES & RESET
+       ========================================================================== */
+    :root {
+      --bg-dark: #050a18;
+      --bg-navy: #0a1128;
+      --bg-navy-light: #101c3d;
+      --bg-card: #132247;
+      --bg-card-hover: #182b59;
+      --border-color: rgba(0, 210, 255, 0.15);
+      --border-glow: rgba(0, 210, 255, 0.4);
+      
+      --electric-blue: #00d2ff;
+      --electric-cyan: #00f0ff;
+      --electric-deep: #0066ff;
+      --electric-hover: #33dcff;
+      --electric-glow: 0 0 25px rgba(0, 210, 255, 0.35);
+      
+      --text-white: #ffffff;
+      --text-light: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dark: #0f172a;
+      
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
+      --shadow-glow: 0 0 20px rgba(0, 210, 255, 0.25);
+      
+      --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      outline: none;
+      border: none;
+    }
+
+    button {
+      cursor: pointer;
+      background: none;
+      transition: var(--transition);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ==========================================================================
+       2. TOP NOTIFICATION BAR & HEADER
+       ========================================================================== */
+    .top-bar {
+      background: linear-gradient(90deg, #001f3f, #001233);
+      border-bottom: 1px solid rgba(0, 210, 255, 0.15);
+      padding: 0.5rem 0;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .top-bar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .top-bar-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .top-bar-item i {
+      color: var(--electric-blue);
+    }
+
+    .top-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .admin-link-pill {
+      background: rgba(0, 210, 255, 0.1);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      color: var(--electric-blue);
+      padding: 0.2rem 0.65rem;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: var(--transition);
+    }
+
+    .admin-link-pill:hover {
+      background: var(--electric-blue);
+      color: var(--bg-dark);
+      box-shadow: 0 0 12px rgba(0, 210, 255, 0.5);
+    }
+
+    /* Main Navbar */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 990;
+      background: rgba(10, 17, 40, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 76px;
+      gap: 1.5rem;
+    }
+
+    /* WayaTronic Logo */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text-white);
+      user-select: none;
+    }
+
+    .logo-icon-wrap {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, #00d2ff, #0055ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--electric-glow);
+      position: relative;
+    }
+
+    .logo-icon-wrap i {
+      color: #ffffff;
+      font-size: 1.25rem;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .logo-brand {
+      color: var(--text-white);
+    }
+
+    .logo-brand span {
+      background: linear-gradient(90deg, var(--electric-cyan), var(--electric-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo-sub {
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Search Bar in Nav */
+    .nav-search {
+      flex: 1;
+      max-width: 460px;
+      position: relative;
+    }
+
+    .search-input-wrap {
+      display: flex;
+      align-items: center;
+      background: rgba(16, 28, 61, 0.85);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-full);
+      padding: 0.45rem 1rem;
+      transition: var(--transition);
+    }
+
+    .search-input-wrap:focus-within {
+      border-color: var(--electric-blue);
+      box-shadow: 0 0 16px rgba(0, 210, 255, 0.25);
+      background: rgba(19, 34, 71, 0.95);
+    }
+
+    .search-input-wrap i {
+      color: var(--text-muted);
+      margin-right: 0.65rem;
+      font-size: 0.9rem;
+    }
+
+    .search-input {
+      background: transparent;
+      width: 100%;
+      color: var(--text-white);
+      font-size: 0.9rem;
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-clear-btn {
+      color: var(--text-muted);
+      display: none;
+      padding: 0.2rem;
+    }
+
+    .search-clear-btn:hover {
+      color: var(--text-white);
+    }
+
+    /* Nav Links */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 0.5rem 0.25rem;
+      position: relative;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--electric-blue);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--electric-blue);
+      box-shadow: 0 0 8px var(--electric-blue);
+    }
+
+    /* Nav Action Buttons */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-full);
+      background: rgba(16, 28, 61, 0.8);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .btn-icon:hover {
+      border-color: var(--electric-blue);
+      color: var(--electric-blue);
+      background: rgba(0, 210, 255, 0.1);
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.25);
+    }
+
+    .badge-count {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: linear-gradient(135deg, #00d2ff, #0066ff);
+      color: #ffffff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .badge-count.pop {
+      transform: scale(1.35);
+    }
+
+    .btn-auth {
+      background: rgba(0, 210, 255, 0.12);
+      border: 1px solid var(--electric-blue);
+      color: var(--electric-blue);
+      padding: 0.5rem 1.1rem;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: var(--transition);
+    }
+
+    .btn-auth:hover {
+      background: var(--electric-blue);
+      color: var(--bg-dark);
+      box-shadow: var(--electric-glow);
+    }
+
+    .user-pill {
+      background: rgba(16, 28, 61, 0.9);
+      border: 1px solid var(--border-color);
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .user-pill:hover {
+      border-color: var(--electric-blue);
+    }
+
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--electric-blue), #0044ff);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
+
+    .user-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      max-width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      width: 210px;
+      padding: 0.5rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.25rem;
+      z-index: 1000;
+    }
+
+    .user-dropdown.show {
+      display: flex;
+    }
+
+    .user-dropdown-item {
+      padding: 0.6rem 0.85rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: var(--transition);
+    }
+
+    .user-dropdown-item i {
+      color: var(--electric-blue);
+      width: 18px;
+    }
+
+    .user-dropdown-item:hover {
+      background: rgba(0, 210, 255, 0.12);
+      color: var(--electric-blue);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      font-size: 1.35rem;
+      color: var(--text-light);
+    }
+
+    /* ==========================================================================
+       3. HERO SECTION
+       ========================================================================== */
+    .hero {
+      position: relative;
+      padding: 5rem 0 4.5rem;
+      background: radial-gradient(circle at 50% 10%, rgba(0, 102, 255, 0.15) 0%, rgba(5, 10, 24, 0) 70%),
+                  radial-gradient(circle at 90% 40%, rgba(0, 210, 255, 0.08) 0%, transparent 60%);
+      border-bottom: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(0, 210, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 210, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%);
+      -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%);
+    }
+
+    .hero .container {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 3.5rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0, 210, 255, 0.08);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      padding: 0.35rem 0.9rem;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--electric-cyan);
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 20px rgba(0, 210, 255, 0.15);
+    }
+
+    .hero-badge i {
+      color: var(--electric-blue);
+    }
+
+    .hero-title {
+      font-size: 3.25rem;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: var(--text-white);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title .highlight {
+      background: linear-gradient(90deg, #ffffff 10%, var(--electric-cyan) 60%, var(--electric-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 2.25rem;
+      max-width: 580px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--electric-blue), #0055ff);
+      color: #ffffff;
+      padding: 0.95rem 2rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      box-shadow: 0 8px 25px rgba(0, 119, 255, 0.4), var(--electric-glow);
+      transition: var(--transition);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 119, 255, 0.6), 0 0 30px rgba(0, 210, 255, 0.5);
+      background: linear-gradient(135deg, var(--electric-hover), #0066ff);
+    }
+
+    .btn-secondary {
+      background: rgba(16, 28, 61, 0.85);
+      border: 1px solid var(--border-color);
+      color: var(--text-light);
+      padding: 0.95rem 1.85rem;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      transition: var(--transition);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--electric-blue);
+      color: var(--electric-blue);
+      background: rgba(0, 210, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-stat-num {
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-white);
+    }
+
+    .hero-stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Hero Showcase Card */
+    .hero-showcase {
+      position: relative;
+    }
+
+    .showcase-card {
+      background: linear-gradient(145deg, rgba(19, 34, 71, 0.8), rgba(10, 17, 40, 0.95));
+      border: 1px solid rgba(0, 210, 255, 0.25);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 210, 255, 0.15);
+      backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .showcase-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(0, 210, 255, 0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .showcase-badge-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .tag-hot {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #f87171;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .showcase-rating {
+      color: #fbbf24;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .showcase-img-wrap {
+      width: 100%;
+      height: 220px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      position: relative;
+      background: #0d152a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .showcase-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .showcase-card:hover .showcase-img-wrap img {
+      transform: scale(1.05);
+    }
+
+    .showcase-info h4 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 0.4rem;
+    }
+
+    .showcase-info p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+
+    .showcase-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .showcase-price {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .showcase-price-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .showcase-price-val {
+      font-family: var(--font-mono);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--electric-cyan);
+    }
+
+    .btn-showcase-add {
+      background: var(--electric-blue);
+      color: var(--bg-dark);
+      padding: 0.6rem 1.25rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: var(--transition);
+    }
+
+    .btn-showcase-add:hover {
+      background: #fff;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+
+    /* ==========================================================================
+       4. TRUST FEATURES SECTION
+       ========================================================================== */
+    .features-section {
+      padding: 3rem 0;
+      background: rgba(10, 17, 40, 0.6);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: rgba(16, 28, 61, 0.5);
+      border: 1px solid rgba(0, 210, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      border-color: var(--electric-blue);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 210, 255, 0.15);
+      background: rgba(19, 34, 71, 0.7);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: var(--radius-md);
+      background: rgba(0, 210, 255, 0.1);
+      border: 1px solid rgba(0, 210, 255, 0.25);
+      color: var(--electric-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .feature-text h4 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 0.25rem;
+    }
+
+    .feature-text p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* ==========================================================================
+       5. CATEGORIES BAR & CATALOG SECTION
+       ========================================================================== */
+    .catalog-section {
+      padding: 4.5rem 0;
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 3rem;
+    }
+
+    .section-eyebrow {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--electric-blue);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 2.35rem;
+      font-weight: 800;
+      color: var(--text-white);
+      letter-spacing: -0.5px;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    /* Category Filter Pills */
+    .category-pills-wrap {
+      margin-bottom: 2.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .category-pills {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .cat-pill {
+      background: rgba(16, 28, 61, 0.8);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.6rem 1.15rem;
+      border-radius: var(--radius-full);
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .cat-pill i {
+      font-size: 0.85rem;
+      color: var(--electric-blue);
+      opacity: 0.7;
+    }
+
+    .cat-pill .pill-count {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-full);
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+    }
+
+    .cat-pill:hover {
+      border-color: var(--electric-blue);
+      color: var(--text-white);
+      background: rgba(0, 210, 255, 0.08);
+    }
+
+    .cat-pill.active {
+      background: linear-gradient(135deg, var(--electric-blue), #0055ff);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 15px rgba(0, 119, 255, 0.35);
+    }
+
+    .cat-pill.active i {
+      color: #ffffff;
+      opacity: 1;
+    }
+
+    .cat-pill.active .pill-count {
+      background: rgba(0, 0, 0, 0.25);
+      color: #fff;
+    }
+
+    /* Controls Bar: Filters, Counts, Sort */
+    .catalog-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      background: rgba(16, 28, 61, 0.6);
+      border: 1px solid var(--border-color);
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius-lg);
+      margin-bottom: 2.5rem;
+    }
+
+    .controls-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .results-count {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .results-count span {
+      color: var(--electric-cyan);
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    .in-stock-filter {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+      color: var(--text-light);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .in-stock-filter input {
+      accent-color: var(--electric-blue);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .controls-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .sort-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .sort-select {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-white);
+      padding: 0.5rem 0.85rem;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .sort-select:focus {
+      border-color: var(--electric-blue);
+    }
+
+    .sort-select option {
+      background: var(--bg-navy);
+      color: var(--text-white);
+    }
+
+    /* Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.75rem;
+    }
+
+    /* Product Card */
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .product-card:hover {
+      border-color: var(--electric-blue);
+      transform: translateY(-5px);
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 210, 255, 0.2);
+    }
+
+    .card-top {
+      position: relative;
+      height: 210px;
+      background: #0b152e;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .product-card:hover .card-img {
+      transform: scale(1.08);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      z-index: 2;
+    }
+
+    .badge-in-stock {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+    }
+
+    .badge-low-stock {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #fbbf24;
+    }
+
+    .badge-out-stock {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #f87171;
+    }
+
+    .btn-quick-view {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(10, 17, 40, 0.85);
+      border: 1px solid var(--border-color);
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: var(--transition);
+      z-index: 2;
+    }
+
+    .product-card:hover .btn-quick-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .btn-quick-view:hover {
+      background: var(--electric-blue);
+      color: var(--bg-dark);
+      box-shadow: 0 0 12px var(--electric-blue);
+    }
+
+    .card-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-cat {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--electric-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.4rem;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-white);
+      line-height: 1.4;
+      margin-bottom: 0.6rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 2.8em;
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .card-rating {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+      font-size: 0.82rem;
+    }
+
+    .stars {
+      color: #fbbf24;
+      display: flex;
+      gap: 0.15rem;
+    }
+
+    .rating-num {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: auto;
+    }
+
+    .card-price {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .price-curr {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .price-amount {
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--electric-cyan);
+    }
+
+    .btn-add-cart {
+      background: rgba(0, 210, 255, 0.12);
+      border: 1px solid var(--electric-blue);
+      color: var(--electric-blue);
+      padding: 0.55rem 1rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: var(--transition);
+    }
+
+    .btn-add-cart:hover:not(:disabled) {
+      background: var(--electric-blue);
+      color: var(--bg-dark);
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+    }
+
+    .btn-add-cart:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      border-color: rgba(255, 255, 255, 0.15);
+      color: var(--text-muted);
+    }
+
+    /* Empty catalog state */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 5rem 1.5rem;
+      background: rgba(16, 28, 61, 0.4);
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-xl);
+    }
+
+    .empty-state i {
+      font-size: 3.5rem;
+      color: var(--electric-blue);
+      margin-bottom: 1.25rem;
+      opacity: 0.6;
+    }
+
+    .empty-state h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-state p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ==========================================================================
+       6. ABOUT US & CONTACT SECTIONS
+       ========================================================================== */
+    .about-section {
+      padding: 5rem 0;
+      background: rgba(10, 17, 40, 0.8);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+    }
+
+    .about-content h2 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--text-white);
+      margin-bottom: 1.25rem;
+      line-height: 1.2;
+    }
+
+    .about-content p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-highlights {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .about-hl-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    .about-hl-item i {
+      color: var(--electric-cyan);
+      font-size: 1.1rem;
+    }
+
+    .about-card-banner {
+      background: linear-gradient(145deg, #132247, #0b142d);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+
+    .about-banner-badge {
+      display: inline-block;
+      background: rgba(0, 210, 255, 0.1);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      color: var(--electric-blue);
+      padding: 0.3rem 0.8rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .about-card-banner h3 {
+      font-size: 1.6rem;
+      color: #fff;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .about-stats-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .about-stat-box h4 {
+      font-family: var(--font-mono);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--electric-cyan);
+    }
+
+    .about-stat-box p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      padding: 5rem 0;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 3.5rem;
+    }
+
+    .contact-info h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .contact-item-icon {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      border-radius: var(--radius-md);
+      background: rgba(0, 210, 255, 0.1);
+      border: 1px solid rgba(0, 210, 255, 0.25);
+      color: var(--electric-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .contact-item-text h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 0.2rem;
+    }
+
+    .contact-item-text p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .contact-form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .contact-form-card h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-control {
+      width: 100%;
+      background: rgba(10, 17, 40, 0.7);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      color: var(--text-white);
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      border-color: var(--electric-blue);
+      box-shadow: 0 0 12px rgba(0, 210, 255, 0.2);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    /* ==========================================================================
+       7. FOOTER
+       ========================================================================== */
+    .footer {
+      background: #020612;
+      border-top: 1px solid var(--border-color);
+      padding: 4.5rem 0 2rem;
+      color: var(--text-muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin: 1.25rem 0;
+      max-width: 320px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .social-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      transition: var(--transition);
+    }
+
+    .social-btn:hover {
+      background: var(--electric-blue);
+      color: var(--bg-dark);
+      border-color: var(--electric-blue);
+      transform: translateY(-2px);
+    }
+
+    .footer-col h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .footer-link {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+
+    .footer-link:hover {
+      color: var(--electric-blue);
+      padding-left: 4px;
+    }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.82rem;
+    }
+
+    .payment-icons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.25rem;
+    }
+
+    /* ==========================================================================
+       8. MODALS & DRAWERS (CART, CHECKOUT, AUTH, PRODUCT DETAILS)
+       ========================================================================== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 18, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg), 0 0 35px rgba(0, 210, 255, 0.15);
+      width: 100%;
+      max-width: 580px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: scale(0.95);
+      transition: var(--transition);
+      padding: 2rem;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: scale(1);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: var(--transition);
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      transform: rotate(90deg);
+    }
+
+    /* Cart Drawer (Slide over) */
+    .cart-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 18, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 1100;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .cart-drawer-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg-navy);
+      border-left: 1px solid var(--border-color);
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
+      z-index: 1101;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cart-drawer.active {
+      transform: translateX(0);
+    }
+
+    .cart-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(16, 28, 61, 0.8);
+    }
+
+    .cart-header h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .cart-items-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .cart-empty-view {
+      text-align: center;
+      padding: 4rem 1.5rem;
+      color: var(--text-muted);
+    }
+
+    .cart-empty-view i {
+      font-size: 3.5rem;
+      color: var(--border-color);
+      margin-bottom: 1rem;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(19, 34, 71, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+      position: relative;
+    }
+
+    .cart-item-img {
+      width: 68px;
+      height: 68px;
+      min-width: 68px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      background: #0d152a;
+    }
+
+    .cart-item-details {
+      flex: 1;
+    }
+
+    .cart-item-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-white);
+      line-height: 1.3;
+      margin-bottom: 0.25rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .cart-item-price {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--electric-cyan);
+      font-weight: 600;
+      margin-bottom: 0.45rem;
+    }
+
+    .cart-qty-ctrl {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(10, 17, 40, 0.8);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+    }
+
+    .qty-btn {
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      font-size: 0.8rem;
+    }
+
+    .qty-btn:hover {
+      background: var(--electric-blue);
+      color: var(--bg-dark);
+    }
+
+    .qty-val {
+      width: 32px;
+      text-align: center;
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .cart-item-remove {
+      color: var(--text-muted);
+      padding: 0.4rem;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .cart-item-remove:hover {
+      color: #ef4444;
+    }
+
+    .cart-footer {
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid var(--border-color);
+      background: rgba(16, 28, 61, 0.9);
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .cart-summary-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .cart-summary-line.total {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-white);
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .cart-summary-line.total .total-val {
+      font-family: var(--font-mono);
+      color: var(--electric-cyan);
+    }
+
+    .cart-footer-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .btn-clear-cart {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .btn-clear-cart:hover {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    .btn-checkout {
+      flex: 1;
+      background: linear-gradient(135deg, var(--electric-blue), #0055ff);
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0, 119, 255, 0.4);
+    }
+
+    .btn-checkout:hover {
+      background: linear-gradient(135deg, var(--electric-hover), #0066ff);
+      box-shadow: 0 6px 20px rgba(0, 119, 255, 0.6);
+    }
+
+    /* Product Details Modal Specifics */
+    .modal-product {
+      max-width: 820px;
+    }
+
+    .product-details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 2.5rem;
+    }
+
+    .modal-prod-img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      background: #0d152a;
+      border: 1px solid var(--border-color);
+    }
+
+    .modal-prod-info h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-prod-cat {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--electric-blue);
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+    }
+
+    .modal-prod-price {
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--electric-cyan);
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-prod-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-specs-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-bottom: 1.75rem;
+      background: rgba(10, 17, 40, 0.6);
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .modal-specs-list li {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .modal-specs-list li i {
+      color: var(--electric-blue);
+      font-size: 0.75rem;
+    }
+
+    .modal-action-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* Checkout Modal */
+    .modal-checkout {
+      max-width: 860px;
+    }
+
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 2rem;
+    }
+
+    .checkout-form h3, .checkout-summary-box h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .checkout-summary-box {
+      background: rgba(10, 17, 40, 0.7);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      height: fit-content;
+    }
+
+    .payment-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin: 1rem 0 1.5rem;
+    }
+
+    .payment-option-card {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      background: rgba(16, 28, 61, 0.6);
+      transition: var(--transition);
+    }
+
+    .payment-option-card.active {
+      border-color: var(--electric-blue);
+      background: rgba(0, 210, 255, 0.1);
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+    }
+
+    .payment-option-card i {
+      font-size: 1.25rem;
+      color: var(--electric-blue);
+    }
+
+    .payment-option-card strong {
+      font-size: 0.88rem;
+      color: #fff;
+    }
+
+    .payment-option-card span {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .bank-info-box {
+      background: rgba(0, 210, 255, 0.05);
+      border: 1px dashed rgba(0, 210, 255, 0.3);
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      margin-bottom: 1.25rem;
+      display: none;
+    }
+
+    .bank-info-box.show {
+      display: block;
+    }
+
+    /* Order Confirmation Modal */
+    .modal-confirmation {
+      text-align: center;
+      max-width: 600px;
+    }
+
+    .conf-icon {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.15);
+      border: 2px solid #10b981;
+      color: #10b981;
+      font-size: 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.35);
+    }
+
+    .conf-order-num {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--electric-cyan);
+      background: rgba(0, 210, 255, 0.1);
+      border: 1px solid rgba(0, 210, 255, 0.25);
+      padding: 0.4rem 1.25rem;
+      border-radius: var(--radius-full);
+      margin: 0.75rem 0 1.5rem;
+    }
+
+    .conf-details-card {
+      background: rgba(10, 17, 40, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      text-align: left;
+      font-size: 0.88rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Auth Modal Tabs */
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 0.75rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .auth-tab.active {
+      color: var(--electric-blue);
+      border-bottom-color: var(--electric-blue);
+    }
+
+    /* My Orders Modal */
+    .modal-orders {
+      max-width: 760px;
+    }
+
+    .orders-history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+
+    .order-history-card {
+      background: rgba(10, 17, 40, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .order-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .order-status-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+    }
+
+    .status-pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid #f59e0b; }
+    .status-processing { background: rgba(0, 210, 255, 0.15); color: #00d2ff; border: 1px solid #00d2ff; }
+    .status-shipped { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid #3b82f6; }
+    .status-delivered { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid #10b981; }
+    .status-cancelled { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid #ef4444; }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none;
+    }
+
+    .toast {
+      pointer-events: auto;
+      background: var(--bg-card);
+      border: 1px solid var(--electric-blue);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1.25rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: var(--shadow-lg), 0 0 20px rgba(0, 210, 255, 0.3);
+      font-size: 0.9rem;
+      animation: slideInToast 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      max-width: 380px;
+    }
+
+    @keyframes slideInToast {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 1024px) {
+      .hero .container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .about-grid, .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-bar {
+        display: none;
+      }
+      .nav-links, .nav-search {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .hero-title {
+        font-size: 2.35rem;
+      }
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      .product-details-grid, .checkout-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .cart-drawer {
+        max-width: 100%;
+      }
+    }
+
+    /* Print styles for order slip */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #print-area, #print-area * {
+        visibility: visible;
+      }
+      #print-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        color: #000;
+        background: #fff;
+        padding: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. TOP ANNOUNCEMENT BAR -->
+  <aside class="top-bar" aria-label="Announcement & Quick Navigation">
+    <div class="container">
+      <div class="top-bar-left">
+        <span class="top-bar-item"><i class="fa-solid fa-bolt"></i> Island-wide Express Delivery across Sri Lanka</span>
+        <span class="top-bar-item"><i class="fa-solid fa-shield-halved"></i> 100% Genuine Test Equipment Certified</span>
+      </div>
+      <div class="top-bar-right">
+        <span class="top-bar-item"><i class="fa-solid fa-phone"></i> Hotline: +94 11 234 5678</span>
+        <a href="admin.html" class="admin-link-pill" title="Access Admin Dashboard">
+          <i class="fa-solid fa-lock"></i> Admin Portal
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- 2. MAIN HEADER & NAVIGATION -->
+  <header class="header">
+    <div class="container">
+      <nav class="navbar">
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+          <div class="logo-icon-wrap">
+            <i class="fa-solid fa-bolt-lightning"></i>
+          </div>
+          <div class="logo-text">
+            <span class="logo-brand">Waya<span>Tronic</span></span>
+            <span class="logo-sub">Test & Measure</span>
+          </div>
+        </a>
+
+        <!-- Search Bar -->
+        <div class="nav-search">
+          <div class="search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search multimeters, scopes, ESP32, components..." autocomplete="off">
+            <button class="search-clear-btn" id="searchClearBtn" title="Clear search"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#products" class="nav-link">Products</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+
+        <!-- Action Buttons -->
+        <div class="nav-actions">
+          <!-- Auth / Profile Control -->
+          <div id="navAuthContainer">
+            <button class="btn-auth" id="openAuthModalBtn">
+              <i class="fa-regular fa-user"></i> <span>Sign In</span>
+            </button>
+          </div>
+
+          <!-- Shopping Cart Button -->
+          <button class="btn-icon" id="openCartBtn" title="View Cart">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="badge-count" id="cartBadgeCount">0</span>
+          </button>
+
+          <!-- Mobile Toggle -->
+          <button class="mobile-menu-btn" id="mobileMenuBtn" title="Toggle Navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 3. HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="hero-grid-bg"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="fa-solid fa-microchip"></i> ISO 9001 Certified Electronics Distributor
+        </div>
+        <h1 class="hero-title">
+          Your Trusted <br>
+          <span class="highlight">Electronic Test Equipment</span> Store
+        </h1>
+        <p class="hero-desc">
+          Empowering Sri Lankan engineers, university researchers, and electronics makers with world-class digital multimeters, oscilloscopes, variable bench power supplies, and maker microcontrollers.
+        </p>
+        <div class="hero-actions">
+          <a href="#products" class="btn-primary">
+            <span>Shop Now</span> <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="#about" class="btn-secondary">
+            <span>Why WayaTronic</span> <i class="fa-solid fa-circle-info"></i>
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat-item">
+            <span class="hero-stat-num">500+</span>
+            <span class="hero-stat-label">Hardware Models</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-num">100%</span>
+            <span class="hero-stat-label">Genuine Factory QC</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-num">24 Hrs</span>
+            <span class="hero-stat-label">Express Island Dispatch</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Showcase Card -->
+      <div class="hero-showcase">
+        <div class="showcase-card" id="heroShowcaseCard">
+          <div class="showcase-badge-top">
+            <span class="tag-hot"><i class="fa-solid fa-fire"></i> Featured Instrument</span>
+            <span class="showcase-rating"><i class="fa-solid fa-star"></i> 4.9 (48 reviews)</span>
+          </div>
+          <div class="showcase-img-wrap">
+            <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80" alt="Fluke Multimeter" id="heroShowcaseImg">
+          </div>
+          <div class="showcase-info">
+            <h4 id="heroShowcaseTitle">Fluke 117 True RMS Digital Multimeter</h4>
+            <p id="heroShowcaseDesc">Professional compact True-RMS meter for commercial electricians and lab validation.</p>
+          </div>
+          <div class="showcase-footer">
+            <div class="showcase-price">
+              <span class="showcase-price-label">Official Store Price</span>
+              <span class="showcase-price-val" id="heroShowcasePrice">LKR 78,500</span>
+            </div>
+            <button class="btn-showcase-add" id="heroShowcaseAddBtn">
+              <i class="fa-solid fa-cart-plus"></i> Quick Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. TRUST & VALUE PROPOSITIONS -->
+  <section class="features-section">
+    <div class="container">
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
+          <div class="feature-text">
+            <h4>Island-Wide Delivery</h4>
+            <p>Fast courier dispatch to Colombo, Kandy, Galle, Jaffna, and across all 25 districts.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-certificate"></i></div>
+          <div class="feature-text">
+            <h4>100% Genuine Certified</h4>
+            <p>Factory-sealed test units with NIST-traceable calibration certificates.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-shield-virus"></i></div>
+          <div class="feature-text">
+            <h4>Official Warranty</h4>
+            <p>Complete 1-year replacement guarantee and local repair lab support.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
+          <div class="feature-text">
+            <h4>Engineering Support</h4>
+            <p>Expert technical guidance from qualified electronic engineers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. PRODUCTS CATALOG SECTION -->
+  <section class="catalog-section" id="products">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Inventory Catalog</span>
+        <h2 class="section-title">Explore Electronic Instruments & Components</h2>
+        <p class="section-subtitle">Select from our certified range of oscilloscopes, multimeters, maker development boards, and prototyping essentials.</p>
+      </div>
+
+      <!-- Category Filter Pills Bar -->
+      <div class="category-pills-wrap">
+        <div class="category-pills" id="categoryPills">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- Controls & Filter Bar -->
+      <div class="catalog-controls">
+        <div class="controls-left">
+          <div class="results-count">
+            Showing <span id="displayCount">0</span> of <span id="totalCount">0</span> hardware items
+          </div>
+          <label class="in-stock-filter">
+            <input type="checkbox" id="inStockOnlyCheckbox"> In-Stock Only
+          </label>
+        </div>
+        <div class="controls-right">
+          <div class="sort-wrap">
+            <label for="sortSelect"><i class="fa-solid fa-arrow-down-wide-short"></i> Sort By:</label>
+            <select id="sortSelect" class="sort-select">
+              <option value="default">Featured / Recommended</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="name-asc">Name: A to Z</option>
+              <option value="stock-desc">Stock Availability</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="product-grid" id="productGrid">
+        <!-- Injected dynamically via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ABOUT US SECTION -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-content">
+          <span class="section-eyebrow">About WayaTronic</span>
+          <h2>Sri Lanka's Benchmark in Electronic Measurement</h2>
+          <p>
+            Founded by electronics and telecommunication engineers, <strong>WayaTronic</strong> was born to solve a critical challenge: providing Sri Lankan university labs, hardware startups, hobbyists, and industrial facilities with reliable, calibrated electronic test equipment at fair, direct-importer prices.
+          </p>
+          <p>
+            Every digital multimeter, oscilloscope, and laboratory DC supply in our catalog undergoes bench-verification before dispatch. Whether you are debugging high-frequency signals or building your first IoT robot, WayaTronic is your hardware ally.
+          </p>
+          <div class="about-highlights">
+            <div class="about-hl-item"><i class="fa-solid fa-circle-check"></i> Factory Calibration Assurance</div>
+            <div class="about-hl-item"><i class="fa-solid fa-circle-check"></i> Component Authenticity Checks</div>
+            <div class="about-hl-item"><i class="fa-solid fa-circle-check"></i> Island-wide Courier Tracking</div>
+            <div class="about-hl-item"><i class="fa-solid fa-circle-check"></i> Flexible Payment Methods</div>
+          </div>
+        </div>
+        <div class="about-banner-wrap">
+          <div class="about-card-banner">
+            <span class="about-banner-badge"><i class="fa-solid fa-award"></i> Excellence In Testing</span>
+            <h3>Engineered for Precision & Longevity</h3>
+            <p>Our Colombo testing bench is equipped with precision reference meters and thermal cameras to inspect every hardware shipment.</p>
+            <div class="about-stats-row">
+              <div class="about-stat-box">
+                <h4>15,000+</h4>
+                <p>Meters & Boards Supplied</p>
+              </div>
+              <div class="about-stat-box">
+                <h4>99.4%</h4>
+                <p>Positive Feedback Rating</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. CONTACT SECTION -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <span class="section-eyebrow">Get In Touch</span>
+          <h2>Contact WayaTronic Engineering Team</h2>
+          <p>Have inquiries regarding device specifications, institutional bulk purchase orders, or warranty support? Our engineering team is ready to assist you.</p>
+
+          <div class="contact-list">
+            <div class="contact-item">
+              <div class="contact-item-icon"><i class="fa-solid fa-location-dot"></i></div>
+              <div class="contact-item-text">
+                <h4>Official Electronics Showroom & Lab</h4>
+                <p>No. 142, High Level Road, Moratuwa / Colombo, Sri Lanka</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon"><i class="fa-solid fa-phone-volume"></i></div>
+              <div class="contact-item-text">
+                <h4>Technical Hotline & WhatsApp</h4>
+                <p>+94 11 234 5678 / +94 77 987 6543 (Mon - Sat, 8:30am - 6:00pm)</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon"><i class="fa-solid fa-envelope"></i></div>
+              <div class="contact-item-text">
+                <h4>Official Email</h4>
+                <p>sales@wayatronic.lk / support@wayatronic.lk</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-card">
+          <h3>Send Us a Technical Inquiry</h3>
+          <form id="contactForm" onsubmit="event.preventDefault(); handleContactSubmit();">
+            <div class="form-group">
+              <label class="form-label" for="contactName">Your Full Name</label>
+              <input type="text" id="contactName" class="form-control" placeholder="e.g. Nirmal Bandara" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contactEmail">Email Address</label>
+              <input type="email" id="contactEmail" class="form-control" placeholder="nirmal@example.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contactMessage">Message or Equipment Model Request</label>
+              <textarea id="contactMessage" class="form-control" placeholder="Please specify device model, required quantity, or technical inquiry..." required></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
+              <span>Submit Message</span> <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon-wrap"><i class="fa-solid fa-bolt-lightning"></i></div>
+            <div class="logo-text">
+              <span class="logo-brand">Waya<span>Tronic</span></span>
+              <span class="logo-sub">Test & Measure</span>
+            </div>
+          </a>
+          <p>
+            Sri Lanka's dedicated electronic test equipment and engineering component platform. Delivering calibrated precision instruments to engineers and makers.
+          </p>
+          <div class="footer-socials">
+            <a href="#" class="social-btn" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-btn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" class="social-btn" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#" class="social-btn" title="GitHub"><i class="fa-brands fa-github"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Top Categories</h4>
+          <ul class="footer-links">
+            <li><a href="#products" class="footer-link" onclick="filterByCategory('Digital Multimeters')">Digital Multimeters</a></li>
+            <li><a href="#products" class="footer-link" onclick="filterByCategory('Oscilloscopes')">Digital Oscilloscopes</a></li>
+            <li><a href="#products" class="footer-link" onclick="filterByCategory('Power Supplies')">Bench Power Supplies</a></li>
+            <li><a href="#products" class="footer-link" onclick="filterByCategory('Arduino & ESP32')">Arduino & ESP32</a></li>
+            <li><a href="#products" class="footer-link" onclick="filterByCategory('Soldering Tools')">Soldering Stations</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Customer Service</h4>
+          <ul class="footer-links">
+            <li><a href="#about" class="footer-link">Calibration Standards</a></li>
+            <li><a href="#contact" class="footer-link">Warranty & Claims</a></li>
+            <li><a href="javascript:void(0)" class="footer-link" onclick="openMyOrdersModal()">Order Tracking</a></li>
+            <li><a href="#contact" class="footer-link">Showroom Location</a></li>
+            <li><a href="admin.html" class="footer-link" style="color: var(--electric-cyan); font-weight: 600;"><i class="fa-solid fa-lock"></i> Staff Admin Portal</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Payment Methods</h4>
+          <p style="font-size: 0.85rem; margin-bottom: 1rem;">We support hassle-free Cash on Delivery across Sri Lanka & Direct Bank Transfers (BOC & Commercial Bank).</p>
+          <div class="payment-icons">
+            <i class="fa-solid fa-money-bill-wave" title="Cash on Delivery" style="color: #34d399;"></i>
+            <i class="fa-solid fa-building-columns" title="Bank Transfer" style="color: #60a5fa;"></i>
+            <i class="fa-brands fa-cc-visa" title="Visa" style="color: #93c5fd;"></i>
+            <i class="fa-brands fa-cc-mastercard" title="Mastercard" style="color: #f87171;"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 WayaTronic. All Rights Reserved. Built with Vanilla HTML5, CSS3 & JavaScript.
+        </div>
+        <div>
+          <span>Designed for Precision Electronic Engineering</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       9. SLIDE-OUT SHOPPING CART DRAWER
+       ========================================================================== -->
+  <div class="cart-drawer-overlay" id="cartDrawerOverlay" onclick="closeCart()"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart">
+    <div class="cart-header">
+      <h3><i class="fa-solid fa-cart-shopping" style="color: var(--electric-blue);"></i> Shopping Cart (<span id="cartDrawerItemCount">0</span>)</h3>
+      <button class="modal-close-btn" onclick="closeCart()" title="Close Cart"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="cart-items-list" id="cartItemsList">
+      <!-- Injected dynamically via JS -->
+    </div>
+
+    <div class="cart-footer" id="cartFooter">
+      <div class="cart-summary-line">
+        <span>Subtotal</span>
+        <span id="cartSubtotal" style="font-family: var(--font-mono); font-weight: 600; color: #fff;">LKR 0</span>
+      </div>
+      <div class="cart-summary-line">
+        <span>Island-Wide Delivery</span>
+        <span id="cartDeliveryFee" style="font-family: var(--font-mono); color: #34d399;">FREE</span>
+      </div>
+      <div class="cart-summary-line total">
+        <span>Estimated Total</span>
+        <span class="total-val" id="cartTotal">LKR 0</span>
+      </div>
+      <div class="cart-footer-actions">
+        <button class="btn-clear-cart" onclick="clearCart()" title="Remove all items"><i class="fa-solid fa-trash-can"></i> Clear</button>
+        <button class="btn-checkout" onclick="openCheckoutModal()">
+          <span>Proceed to Checkout</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       10. PRODUCT DETAILS MODAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="productDetailModal">
+    <div class="modal-card modal-product">
+      <button class="modal-close-btn" onclick="closeModal('productDetailModal')"><i class="fa-solid fa-xmark"></i></button>
+      <div class="product-details-grid">
+        <div>
+          <img src="" alt="Product Image" id="modalProductImg" class="modal-prod-img">
+        </div>
+        <div class="modal-prod-info">
+          <span class="modal-prod-cat" id="modalProductCat">Category</span>
+          <h2 id="modalProductTitle">Product Title</h2>
+          <div class="card-rating" id="modalProductRating" style="margin-bottom: 0.5rem;">
+            <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+            <span class="rating-num">4.8 (24 reviews)</span>
+          </div>
+          <div class="modal-prod-price" id="modalProductPrice">LKR 0</div>
+          <p class="modal-prod-desc" id="modalProductDesc">Detailed description here.</p>
+          
+          <div style="margin-bottom: 0.75rem; font-size: 0.82rem; font-weight: 700; color: var(--electric-blue); text-transform: uppercase;">
+            Key Specifications:
+          </div>
+          <ul class="modal-specs-list" id="modalProductSpecs">
+            <!-- Populated via JS -->
+          </ul>
+
+          <div style="margin-bottom: 1.25rem; font-size: 0.88rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span style="color: var(--text-muted);">Stock Status:</span>
+            <span id="modalProductStockBadge" class="card-badge" style="position: static;">In Stock</span>
+          </div>
+
+          <div class="modal-action-row">
+            <div class="cart-qty-ctrl" style="padding: 0.2rem 0.4rem;">
+              <button class="qty-btn" onclick="adjustModalQty(-1)"><i class="fa-solid fa-minus"></i></button>
+              <span class="qty-val" id="modalQtyVal">1</span>
+              <button class="qty-btn" onclick="adjustModalQty(1)"><i class="fa-solid fa-plus"></i></button>
+            </div>
+            <button class="btn-primary" id="modalAddToCartBtn" style="flex: 1; justify-content: center;">
+              <i class="fa-solid fa-cart-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       11. CHECKOUT MODAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-card modal-checkout">
+      <button class="modal-close-btn" onclick="closeModal('checkoutModal')"><i class="fa-solid fa-xmark"></i></button>
+      <div class="checkout-grid">
+        <!-- Delivery Information Form -->
+        <div class="checkout-form">
+          <h3><i class="fa-solid fa-truck-ramp-box" style="color: var(--electric-blue);"></i> Delivery Information</h3>
+          <form id="orderForm" onsubmit="event.preventDefault(); placeOrder();">
+            <div class="form-group">
+              <label class="form-label" for="custFullName">Customer Full Name *</label>
+              <input type="text" id="custFullName" class="form-control" placeholder="e.g. Kasun Chamara Perera" required>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label" for="custPhone">Phone Number *</label>
+                <input type="tel" id="custPhone" class="form-control" placeholder="077 123 4567" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="custEmail">Email Address *</label>
+                <input type="email" id="custEmail" class="form-control" placeholder="kasun@example.com" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="custAddress">Delivery Address (Street & City) *</label>
+              <textarea id="custAddress" class="form-control" style="min-height: 80px;" placeholder="No. 45/A, Galle Road, Moratuwa" required></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Payment Method *</label>
+              <div class="payment-options">
+                <div class="payment-option-card active" id="payMethodCOD" onclick="selectPaymentMethod('Cash on Delivery')">
+                  <i class="fa-solid fa-hand-holding-dollar"></i>
+                  <strong>Cash on Delivery</strong>
+                  <span>Pay upon doorstep courier delivery</span>
+                </div>
+                <div class="payment-option-card" id="payMethodBank" onclick="selectPaymentMethod('Bank Transfer')">
+                  <i class="fa-solid fa-building-columns"></i>
+                  <strong>Bank Transfer</strong>
+                  <span>Direct transfer to BOC / Commercial Bank</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bank Transfer details box -->
+            <div class="bank-info-box" id="bankInfoBox">
+              <strong><i class="fa-solid fa-circle-info"></i> Bank Transfer Account Details:</strong><br>
+              • Bank: <strong>Commercial Bank of Ceylon</strong><br>
+              • Account Name: <strong>WayaTronic Electronics (Pvt) Ltd</strong><br>
+              • Account Number: <strong>1000 2489 5721</strong><br>
+              • Branch: <strong>Moratuwa Branch (Code 048)</strong><br>
+              <span style="font-size: 0.75rem; color: var(--electric-cyan);">* Please use your Order ID as deposit reference and send payment receipt via WhatsApp to +94 77 987 6543.</span>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 0.95rem;">
+              <span>Confirm & Place Order</span> <i class="fa-solid fa-circle-check"></i>
+            </button>
+          </form>
+        </div>
+
+        <!-- Checkout Summary -->
+        <div class="checkout-summary-box">
+          <h3><i class="fa-solid fa-receipt" style="color: var(--electric-cyan);"></i> Order Summary</h3>
+          <div id="checkoutItemsList" style="flex: 1; max-height: 260px; overflow-y: auto; margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.65rem;">
+            <!-- Injected via JS -->
+          </div>
+          <div class="cart-summary-line">
+            <span>Subtotal</span>
+            <span id="checkoutSubtotal" style="font-family: var(--font-mono); font-weight: 600; color: #fff;">LKR 0</span>
+          </div>
+          <div class="cart-summary-line">
+            <span>Delivery</span>
+            <span style="font-family: var(--font-mono); color: #34d399;">FREE</span>
+          </div>
+          <div class="cart-summary-line total" style="margin-top: 0.5rem;">
+            <span>Grand Total</span>
+            <span class="total-val" id="checkoutGrandTotal">LKR 0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       12. ORDER CONFIRMATION MODAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="orderConfirmModal">
+    <div class="modal-card modal-confirmation">
+      <div class="conf-icon"><i class="fa-solid fa-check"></i></div>
+      <h2 style="font-size: 1.8rem; font-weight: 800; color: #fff;">Order Confirmed!</h2>
+      <p style="color: var(--text-muted); font-size: 0.92rem;">
+        Thank you for purchasing with WayaTronic. Your order has been registered and is being processed by our laboratory technicians.
+      </p>
+      <div>
+        <span class="conf-order-num" id="confOrderNum">WT-2026-00000</span>
+      </div>
+
+      <div class="conf-details-card" id="confDetailsCard">
+        <!-- Injected via JS -->
+      </div>
+
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <button class="btn-secondary" onclick="printReceipt()"><i class="fa-solid fa-print"></i> Print Receipt</button>
+        <button class="btn-primary" onclick="closeModal('orderConfirmModal')"><i class="fa-solid fa-bag-shopping"></i> Continue Shopping</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       13. CUSTOMER AUTHENTICATION MODAL (LOGIN / REGISTER)
+       ========================================================================== -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-card" style="max-width: 440px;">
+      <button class="modal-close-btn" onclick="closeModal('authModal')"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Sign In</div>
+        <div class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">Register</div>
+      </div>
+
+      <!-- Sign In Form -->
+      <form id="loginForm" onsubmit="event.preventDefault(); handleCustomerLogin();">
+        <div class="form-group">
+          <label class="form-label" for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" class="form-control" placeholder="user@example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+          <span>Sign In</span> <i class="fa-solid fa-right-to-bracket"></i>
+        </button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="registerForm" style="display: none;" onsubmit="event.preventDefault(); handleCustomerRegister();">
+        <div class="form-group">
+          <label class="form-label" for="regName">Full Name</label>
+          <input type="text" id="regName" class="form-control" placeholder="Kasun Perera" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regEmail">Email Address</label>
+          <input type="email" id="regEmail" class="form-control" placeholder="kasun@example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regPhone">Phone Number</label>
+          <input type="tel" id="regPhone" class="form-control" placeholder="077 123 4567" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regPassword">Password</label>
+          <input type="password" id="regPassword" class="form-control" placeholder="Create a password" required>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+          <span>Create Customer Account</span> <i class="fa-solid fa-user-plus"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       14. CUSTOMER MY ORDERS MODAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="myOrdersModal">
+    <div class="modal-card modal-orders">
+      <button class="modal-close-btn" onclick="closeModal('myOrdersModal')"><i class="fa-solid fa-xmark"></i></button>
+      <h3 style="font-size: 1.4rem; font-weight: 800; color: #fff; margin-bottom: 1.25rem;">
+        <i class="fa-solid fa-box-open" style="color: var(--electric-blue);"></i> My Order History
+      </h3>
+      <div class="orders-history-list" id="myOrdersList">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- PRINT SLIP AREA (Hidden except when printing) -->
+  <div id="print-area"></div>
+
+  <!-- ==========================================================================
+       15. VANILLA JAVASCRIPT APPLICATION CORE
+       ========================================================================== -->
+  <script>
+    /* ==========================================================================
+       STORAGE KEYS & INITIAL DATA
+       ========================================================================== */
+    const STORAGE_KEYS = {
+      PRODUCTS: 'waya_products',
+      CATEGORIES: 'waya_categories',
+      ORDERS: 'waya_orders',
+      CUSTOMERS: 'waya_customers',
+      CURRENT_CUSTOMER: 'waya_current_customer',
+      CART: 'waya_cart',
+      ADMINS: 'waya_admins'
+    };
+
+    // Default Categories
+    const DEFAULT_CATEGORIES = [
+      "Digital Multimeters",
+      "Oscilloscopes",
+      "Electronic Test Kits",
+      "Arduino & ESP32",
+      "Sensors & Modules",
+      "Power Supplies",
+      "Soldering Tools",
+      "Electronic Components"
+    ];
+
+    // Default Electronics Products
+    const DEFAULT_PRODUCTS = [
+      {
+        id: "PROD-1001",
+        name: "Fluke 117 True RMS Digital Multimeter",
+        category: "Digital Multimeters",
+        price: 78500,
+        stock: 14,
+        image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
+        description: "Compact True-RMS digital multimeter engineered for commercial electricians and lab testing. Features VoltAlert technology for integrated non-contact voltage detection and AutoVolt automatic AC/DC selection.",
+        specs: ["6000 Counts Display", "True RMS AC Reading", "VoltAlert Non-Contact Voltage", "CAT III 600V Safety Rated"],
+        rating: 4.9,
+        reviewsCount: 38
+      },
+      {
+        id: "PROD-1002",
+        name: "Rigol DS1054Z 50MHz 4-Channel Digital Oscilloscope",
+        category: "Oscilloscopes",
+        price: 145000,
+        stock: 6,
+        image: "https://images.unsplash.com/photo-1581092162384-8987c1d64718?auto=format&fit=crop&w=600&q=80",
+        description: "The gold standard for electronics engineering labs. 4 analog channels with 50MHz bandwidth, 1 GSa/s real-time sample rate, and deep 24 Mpts memory depth with UltraVision hardware decoding.",
+        specs: ["50 MHz Bandwidth (4 Channels)", "1 GSa/s Real-Time Sample Rate", "24 Mpts Standard Memory Depth", "7-inch WVGA High-Res Screen"],
+        rating: 5.0,
+        reviewsCount: 52
+      },
+      {
+        id: "PROD-1003",
+        name: "Aneng AN8008 True-RMS 9999 Counts Auto Multimeter",
+        category: "Digital Multimeters",
+        price: 8900,
+        stock: 28,
+        image: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80",
+        description: "Precision 9999 counts pocket multimeter capable of measuring micro-volts, capacitance, frequency, and duty cycle. Backlit display with square wave generator output.",
+        specs: ["9999 Counts High Precision", "Square Wave Signal Generator", "Auto & Manual Ranging", "Capacitance & Frequency Test"],
+        rating: 4.7,
+        reviewsCount: 41
+      },
+      {
+        id: "PROD-1004",
+        name: "Korad KD3005D Precision Variable DC Bench Power Supply 30V 5A",
+        category: "Power Supplies",
+        price: 42500,
+        stock: 8,
+        image: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=600&q=80",
+        description: "Heavy-duty linear DC power supply with coarse and fine voltage/current dials, low ripple and noise (< 1mVrms), constant voltage (CV) and constant current (CC) automatic switching.",
+        specs: ["0-30V Output Voltage Range", "0-5A Adjustable Current", "Ultra-low Ripple & Noise", "Over-Current Protection (OCP)"],
+        rating: 4.8,
+        reviewsCount: 29
+      },
+      {
+        id: "PROD-1005",
+        name: "TS101 Smart Portable OLED Digital Soldering Iron 65W",
+        category: "Soldering Tools",
+        price: 19800,
+        stock: 16,
+        image: "https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&w=600&q=80",
+        description: "Next-gen intelligent soldering iron with dual DC5525 and USB Type-C PD power support. Rapid 9-second heat-up to 300°C with digital OLED temperature readout and sleep modes.",
+        specs: ["65W Max Output (PD/DC)", "9s Rapid Heating", "Digital OLED Screen", "Smart Sleep & Auto-Off"],
+        rating: 4.9,
+        reviewsCount: 34
+      },
+      {
+        id: "PROD-1006",
+        name: "ESP32-WROOM-32D Dual-Core WiFi & Bluetooth Dev Board",
+        category: "Arduino & ESP32",
+        price: 1850,
+        stock: 65,
+        image: "https://images.unsplash.com/photo-1608564697071-ddf911d81370?auto=format&fit=crop&w=600&q=80",
+        description: "Ultra-popular 30-pin dual-core ESP32 microcontroller with integrated 2.4GHz Wi-Fi, Bluetooth BLE 4.2, 520 KB SRAM, and 4MB SPI Flash memory. Fully Arduino IDE compatible.",
+        specs: ["Tensilica Dual-Core 240MHz", "Wi-Fi 802.11 b/g/n & BLE", "30-pin Breadboard Friendly", "CP2102 USB-to-UART"],
+        rating: 4.9,
+        reviewsCount: 88
+      },
+      {
+        id: "PROD-1007",
+        name: "WayaTronic Master Hardware Troubleshooting & Probing Kit",
+        category: "Electronic Test Kits",
+        price: 28500,
+        stock: 11,
+        image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=600&q=80",
+        description: "Complete electronics workbench verification bundle. Includes gold-plated needle probes, BNC-to-alligator cables, SMD tweezers, solder sucker, logic probe, and zippered ballistic carry case.",
+        specs: ["1000V 20A Gold Needles", "Oscilloscope 100MHz BNC Lead", "SMD Component Probers", "Heavy-Duty Ballistic Case"],
+        rating: 4.8,
+        reviewsCount: 22
+      },
+      {
+        id: "PROD-1008",
+        name: "Arduino Mega 2560 R3 ATmega2560 Development Board",
+        category: "Arduino & ESP32",
+        price: 5200,
+        stock: 24,
+        image: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&fit=crop&w=600&q=80",
+        description: "The ultimate board for complex 3D printers, robotics, and automation projects. Features 54 digital I/O pins (15 PWM), 16 analog inputs, 4 UART hardware serial ports, and 256 KB Flash.",
+        specs: ["ATmega2560 @ 16 MHz", "54 Digital I/O Pins", "16 Analog Inputs", "4 Hardware Serial Ports"],
+        rating: 4.8,
+        reviewsCount: 45
+      },
+      {
+        id: "PROD-1009",
+        name: "37-in-1 Sensor Modules Learning Kit for Arduino & ESP32",
+        category: "Sensors & Modules",
+        price: 12500,
+        stock: 20,
+        image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80",
+        description: "Comprehensive sensor array including ultrasonic sonar, temperature/humidity, flame, infrared barrier, relay, Hall effect, joy-stick, touch sensor, and light-dependent resistors with schematic tutorials.",
+        specs: ["37 Assorted Modules", "Plug & Play Header Pins", "Complete Wiring Guide Included", "Custom Acrylic Organizer Box"],
+        rating: 4.9,
+        reviewsCount: 31
+      },
+      {
+        id: "PROD-1010",
+        name: "Quick 861DW 1000W Lead-Free Digital Hot Air Rework Station",
+        category: "Soldering Tools",
+        price: 85000,
+        stock: 5,
+        image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
+        description: "Industry-grade professional hot air rework station. 1000W high power with CH1/CH2/CH3 memory presets, magnetic handle auto-cooling switch, and twin-stage diaphragm airflow pump.",
+        specs: ["1000W Heavy Duty Power", "CH1/CH2/CH3 Presets", "Magnetic Stand Auto Cool", "Rapid Temperature Recovery"],
+        rating: 5.0,
+        reviewsCount: 19
+      },
+      {
+        id: "PROD-1011",
+        name: "1200 Pcs Assorted Resistor Kit 1/4W 1% Metal Film (64 Values)",
+        category: "Electronic Components",
+        price: 3400,
+        stock: 45,
+        image: "https://images.unsplash.com/photo-1608564697071-ddf911d81370?auto=format&fit=crop&w=600&q=80",
+        description: "Essential laboratory assortment of 1% tolerance metal film resistors ranging from 1 Ohm to 10M Ohm. 20 pieces per value clearly labeled with color band guides.",
+        specs: ["1200 Total Resistors", "64 Standard E24 Values", "1% High Precision Tolerance", "1/4 Watt Metal Film"],
+        rating: 4.8,
+        reviewsCount: 57
+      },
+      {
+        id: "PROD-1012",
+        name: "LCR-T4 Multi-function Transistor Tester & ESR Meter",
+        category: "Electronic Test Kits",
+        price: 4200,
+        stock: 35,
+        image: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80",
+        description: "Automatic detection of NPN/PNP transistors, MOSFETs, JFETs, diodes, thyristors, resistors, inductors, and capacitors with pinout graphic display on 128x64 LCD.",
+        specs: ["Auto Pinout Detection", "Capacitor ESR & Value", "128x64 Graphic LCD", "1-Button Operation"],
+        rating: 4.7,
+        reviewsCount: 63
+      }
+    ];
+
+    // Default Admins (Master Admin required by prompt)
+    const DEFAULT_ADMINS = [
+      {
+        username: "Admin",
+        password: "Admin123@",
+        name: "Master Administrator",
+        role: "Super Admin",
+        isMaster: true,
+        createdAt: "2026-11-01"
+      }
+    ];
+
+    /* ==========================================================================
+       SVG FALLBACK IMAGE GENERATOR
+       ========================================================================== */
+    function getFallbackImage(category, title) {
+      const cleanTitle = (title || 'WayaTronic Hardware').replace(/[^a-zA-Z0-9 ]/g, '').substring(0, 24);
+      const cleanCat = (category || 'Electronics').toUpperCase();
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+        <defs>
+          <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0a1128"/>
+            <stop offset="50%" stop-color="#101c3d"/>
+            <stop offset="100%" stop-color="#050a18"/>
+          </linearGradient>
+          <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(0, 210, 255, 0.08)" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="600" height="400" fill="url(#bg)"/>
+        <rect width="600" height="400" fill="url(#grid)"/>
+        <circle cx="300" cy="180" r="80" fill="none" stroke="rgba(0, 210, 255, 0.25)" stroke-width="2"/>
+        <circle cx="300" cy="180" r="60" fill="rgba(0, 210, 255, 0.05)"/>
+        <path d="M280 150 L320 180 L290 190 L330 220" fill="none" stroke="#00d2ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="300" y="290" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#00d2ff" text-anchor="middle" letter-spacing="2">${cleanCat}</text>
+        <text x="300" y="325" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle">${cleanTitle}</text>
+        <text x="300" y="360" font-family="monospace" font-size="12" fill="#94a3b8" text-anchor="middle">WAYATRONIC TEST LAB CERTIFIED</text>
+      </svg>`;
+      return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    }
+
+    /* ==========================================================================
+       INITIALIZATION & STORAGE SYNC
+       ========================================================================== */
+    function initializeStorage() {
+      if (!localStorage.getItem(STORAGE_KEYS.CATEGORIES)) {
+        localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(DEFAULT_CATEGORIES));
+      }
+      if (!localStorage.getItem(STORAGE_KEYS.PRODUCTS)) {
+        localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(DEFAULT_PRODUCTS));
+      }
+      if (!localStorage.getItem(STORAGE_KEYS.ADMINS)) {
+        localStorage.setItem(STORAGE_KEYS.ADMINS, JSON.stringify(DEFAULT_ADMINS));
+      }
+      if (!localStorage.getItem(STORAGE_KEYS.CUSTOMERS)) {
+        localStorage.setItem(STORAGE_KEYS.CUSTOMERS, JSON.stringify([]));
+      }
+      if (!localStorage.getItem(STORAGE_KEYS.ORDERS)) {
+        localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify([]));
+      }
+      if (!localStorage.getItem(STORAGE_KEYS.CART)) {
+        localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify([]));
+      }
+    }
+
+    function getProducts() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.PRODUCTS)) || [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function getCategories() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.CATEGORIES)) || DEFAULT_CATEGORIES;
+      } catch (e) {
+        return DEFAULT_CATEGORIES;
+      }
+    }
+
+    function getCart() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.CART)) || [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    function getOrders() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.ORDERS)) || [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function getCurrentCustomer() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.CURRENT_CUSTOMER));
+      } catch (e) {
+        return null;
+      }
+    }
+
+    /* ==========================================================================
+       STATE & UI HELPERS
+       ========================================================================== */
+    let currentCategoryFilter = 'all';
+    let searchQuery = '';
+    let sortMethod = 'default';
+    let inStockOnly = false;
+    let selectedPayment = 'Cash on Delivery';
+    let currentModalProductId = null;
+    let currentModalQty = 1;
+
+    function formatLKR(amount) {
+      return 'LKR ' + Number(amount || 0).toLocaleString('en-LK', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      });
+    }
+
+    function showToast(message, icon = 'fa-solid fa-circle-check') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<i class="${icon}" style="color: var(--electric-blue);"></i> <span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3200);
+    }
+
+    /* ==========================================================================
+       CATALOG RENDERING & FILTERING
+       ========================================================================== */
+    function renderCategoryPills() {
+      const pillsContainer = document.getElementById('categoryPills');
+      const categories = getCategories();
+      const products = getProducts();
+
+      let pillsHtml = `
+        <button class="cat-pill ${currentCategoryFilter === 'all' ? 'active' : ''}" onclick="filterByCategory('all')">
+          <i class="fa-solid fa-layer-group"></i> All Hardware
+          <span class="pill-count">${products.length}</span>
+        </button>
+      `;
+
+      categories.forEach(cat => {
+        const count = products.filter(p => p.category === cat).length;
+        const isActive = currentCategoryFilter === cat;
+        pillsHtml += `
+          <button class="cat-pill ${isActive ? 'active' : ''}" onclick="filterByCategory('${cat.replace(/'/g, "\\'")}')">
+            <i class="fa-solid fa-microchip"></i> ${cat}
+            <span class="pill-count">${count}</span>
+          </button>
+        `;
+      });
+
+      pillsContainer.innerHTML = pillsHtml;
+    }
+
+    function filterByCategory(category) {
+      currentCategoryFilter = category;
+      renderCategoryPills();
+      renderProducts();
+      // Scroll to catalog section if not in view
+      const elem = document.getElementById('products');
+      if (elem && window.scrollY < elem.offsetTop - 200) {
+        elem.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById('productGrid');
+      let products = getProducts();
+      const totalCountElem = document.getElementById('totalCount');
+      const displayCountElem = document.getElementById('displayCount');
+
+      totalCountElem.textContent = products.length;
+
+      // 1. Filter by category
+      if (currentCategoryFilter !== 'all') {
+        products = products.filter(p => p.category === currentCategoryFilter);
+      }
+
+      // 2. Filter by search query
+      if (searchQuery.trim() !== '') {
+        const q = searchQuery.toLowerCase();
+        products = products.filter(p => 
+          (p.name && p.name.toLowerCase().includes(q)) ||
+          (p.category && p.category.toLowerCase().includes(q)) ||
+          (p.description && p.description.toLowerCase().includes(q)) ||
+          (p.specs && p.specs.some(s => s.toLowerCase().includes(q)))
+        );
+      }
+
+      // 3. Filter by In Stock
+      if (inStockOnly) {
+        products = products.filter(p => Number(p.stock) > 0);
+      }
+
+      // 4. Sort
+      if (sortMethod === 'price-asc') {
+        products.sort((a, b) => a.price - b.price);
+      } else if (sortMethod === 'price-desc') {
+        products.sort((a, b) => b.price - a.price);
+      } else if (sortMethod === 'name-asc') {
+        products.sort((a, b) => a.name.localeCompare(b.name));
+      } else if (sortMethod === 'stock-desc') {
+        products.sort((a, b) => b.stock - a.stock);
+      }
+
+      displayCountElem.textContent = products.length;
+
+      if (products.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <i class="fa-solid fa-microchip"></i>
+            <h3>No Hardware Items Found</h3>
+            <p>We couldn't find any electronic products matching your current filters or search query.</p>
+            <button class="btn-primary" onclick="resetFilters()">Reset All Filters</button>
+          </div>
+        `;
+        return;
+      }
+
+      const cart = getCart();
+
+      grid.innerHTML = products.map(prod => {
+        const stock = Number(prod.stock || 0);
+        let stockBadge = '';
+        if (stock <= 0) {
+          stockBadge = `<span class="card-badge badge-out-stock">Out of Stock</span>`;
+        } else if (stock <= 5) {
+          stockBadge = `<span class="card-badge badge-low-stock">Only ${stock} Left</span>`;
+        } else {
+          stockBadge = `<span class="card-badge badge-in-stock">In Stock (${stock})</span>`;
+        }
+
+        const fallbackUrl = getFallbackImage(prod.category, prod.name);
+        const imageUrl = prod.image || fallbackUrl;
+
+        // Check if already in cart
+        const inCartItem = cart.find(item => item.productId === prod.id);
+        const inCartQty = inCartItem ? inCartItem.quantity : 0;
+
+        return `
+          <div class="product-card" data-id="${prod.id}">
+            <div class="card-top">
+              ${stockBadge}
+              <button class="btn-quick-view" onclick="openProductModal('${prod.id}')" title="Quick View Specs">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+              <img 
+                src="${imageUrl}" 
+                alt="${prod.name}" 
+                class="card-img" 
+                loading="lazy" 
+                onerror="this.onerror=null; this.src='${fallbackUrl}'"
+              >
+            </div>
+            <div class="card-body">
+              <span class="card-cat">${prod.category}</span>
+              <h3 class="card-title" title="${prod.name}">${prod.name}</h3>
+              <p class="card-desc">${prod.description || 'Precision test equipment calibrated for engineering laboratories.'}</p>
+              
+              <div class="card-rating">
+                <div class="stars">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
+                <span class="rating-num">${prod.rating || 4.8} (${prod.reviewsCount || 24})</span>
+              </div>
+
+              <div class="card-footer">
+                <div class="card-price">
+                  <span class="price-curr">Price (LKR)</span>
+                  <span class="price-amount">${formatLKR(prod.price)}</span>
+                </div>
+                <button 
+                  class="btn-add-cart" 
+                  onclick="addToCart('${prod.id}', 1)"
+                  ${stock <= 0 ? 'disabled' : ''}
+                >
+                  <i class="fa-solid ${inCartQty > 0 ? 'fa-cart-shopping' : 'fa-cart-plus'}"></i>
+                  <span>${inCartQty > 0 ? `In Cart (${inCartQty})` : 'Add to Cart'}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function resetFilters() {
+      currentCategoryFilter = 'all';
+      searchQuery = '';
+      document.getElementById('searchInput').value = '';
+      document.getElementById('searchClearBtn').style.display = 'none';
+      inStockOnly = false;
+      document.getElementById('inStockOnlyCheckbox').checked = false;
+      sortMethod = 'default';
+      document.getElementById('sortSelect').value = 'default';
+      renderCategoryPills();
+      renderProducts();
+    }
+
+    /* ==========================================================================
+       PRODUCT DETAILS MODAL
+       ========================================================================== */
+    function openProductModal(productId) {
+      const products = getProducts();
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+
+      currentModalProductId = productId;
+      currentModalQty = 1;
+
+      const fallbackUrl = getFallbackImage(product.category, product.name);
+      const imgElem = document.getElementById('modalProductImg');
+      imgElem.src = product.image || fallbackUrl;
+      imgElem.onerror = () => { imgElem.src = fallbackUrl; };
+
+      document.getElementById('modalProductCat').textContent = product.category;
+      document.getElementById('modalProductTitle').textContent = product.name;
+      document.getElementById('modalProductPrice').textContent = formatLKR(product.price);
+      document.getElementById('modalProductDesc').textContent = product.description || 'Engineered for high accuracy and long-term stability.';
+      document.getElementById('modalQtyVal').textContent = currentModalQty;
+
+      // Specs list
+      const specsList = document.getElementById('modalProductSpecs');
+      const specs = product.specs && product.specs.length > 0 
+        ? product.specs 
+        : ["Factory Calibrated", "1-Year Official Warranty", "Island-wide Technical Support"];
+      
+      specsList.innerHTML = specs.map(s => `<li><i class="fa-solid fa-circle-check"></i> ${s}</li>`).join('');
+
+      // Stock Badge
+      const stock = Number(product.stock || 0);
+      const badge = document.getElementById('modalProductStockBadge');
+      const addBtn = document.getElementById('modalAddToCartBtn');
+
+      if (stock <= 0) {
+        badge.className = 'card-badge badge-out-stock';
+        badge.textContent = 'Out of Stock';
+        addBtn.disabled = true;
+        addBtn.innerHTML = '<i class="fa-solid fa-ban"></i> Out of Stock';
+      } else {
+        badge.className = 'card-badge badge-in-stock';
+        badge.textContent = `In Stock (${stock} available)`;
+        addBtn.disabled = false;
+        addBtn.innerHTML = '<i class="fa-solid fa-cart-plus"></i> Add to Cart';
+        addBtn.onclick = () => {
+          addToCart(product.id, currentModalQty);
+          closeModal('productDetailModal');
+        };
+      }
+
+      openModal('productDetailModal');
+    }
+
+    function adjustModalQty(delta) {
+      const products = getProducts();
+      const product = products.find(p => p.id === currentModalProductId);
+      if (!product) return;
+
+      const stock = Number(product.stock || 0);
+      let newQty = currentModalQty + delta;
+      if (newQty < 1) newQty = 1;
+      if (newQty > stock) {
+        newQty = stock;
+        showToast(`Maximum available stock is ${stock}`, 'fa-solid fa-triangle-exclamation');
+      }
+      currentModalQty = newQty;
+      document.getElementById('modalQtyVal').textContent = currentModalQty;
+    }
+
+    /* ==========================================================================
+       SHOPPING CART FUNCTIONS
+       ========================================================================== */
+    function addToCart(productId, quantity = 1) {
+      const products = getProducts();
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+
+      const stock = Number(product.stock || 0);
+      if (stock <= 0) {
+        showToast('Sorry, this product is currently out of stock!', 'fa-solid fa-triangle-exclamation');
+        return;
+      }
+
+      let cart = getCart();
+      const existing = cart.find(item => item.productId === productId);
+
+      if (existing) {
+        if (existing.quantity + quantity > stock) {
+          showToast(`Cannot add more than ${stock} units (current stock limit)`, 'fa-solid fa-triangle-exclamation');
+          return;
+        }
+        existing.quantity += quantity;
+      } else {
+        if (quantity > stock) quantity = stock;
+        cart.push({ productId, quantity });
+      }
+
+      saveCart(cart);
+      showToast(`Added "${product.name.substring(0, 28)}..." to cart!`, 'fa-solid fa-cart-plus');
+      
+      // Animate cart badge
+      const badge = document.getElementById('cartBadgeCount');
+      badge.classList.add('pop');
+      setTimeout(() => badge.classList.remove('pop'), 350);
+
+      renderProducts();
+    }
+
+    function updateCartQuantity(productId, newQty) {
+      let cart = getCart();
+      const products = getProducts();
+      const product = products.find(p => p.id === productId);
+      const stock = product ? Number(product.stock || 0) : 999;
+
+      if (newQty <= 0) {
+        cart = cart.filter(item => item.productId !== productId);
+      } else {
+        const item = cart.find(i => i.productId === productId);
+        if (item) {
+          if (newQty > stock) {
+            item.quantity = stock;
+            showToast(`Maximum stock limit of ${stock} reached.`, 'fa-solid fa-triangle-exclamation');
+          } else {
+            item.quantity = newQty;
+          }
+        }
+      }
+      saveCart(cart);
+      renderProducts();
+    }
+
+    function removeFromCart(productId) {
+      let cart = getCart();
+      cart = cart.filter(item => item.productId !== productId);
+      saveCart(cart);
+      renderProducts();
+      showToast('Item removed from cart', 'fa-solid fa-trash-can');
+    }
+
+    function clearCart() {
+      if (confirm('Are you sure you want to clear your shopping cart?')) {
+        saveCart([]);
+        renderProducts();
+        showToast('Shopping cart emptied', 'fa-solid fa-trash-can');
+      }
+    }
+
+    function updateCartUI() {
+      const cart = getCart();
+      const products = getProducts();
+      const badgeCount = document.getElementById('cartBadgeCount');
+      const drawerCount = document.getElementById('cartDrawerItemCount');
+      const cartList = document.getElementById('cartItemsList');
+      const subtotalElem = document.getElementById('cartSubtotal');
+      const totalElem = document.getElementById('cartTotal');
+
+      let totalItems = 0;
+      let subtotal = 0;
+
+      cart.forEach(item => {
+        totalItems += item.quantity;
+        const prod = products.find(p => p.id === item.productId);
+        if (prod) {
+          subtotal += Number(prod.price) * item.quantity;
+        }
+      });
+
+      badgeCount.textContent = totalItems;
+      drawerCount.textContent = totalItems;
+      subtotalElem.textContent = formatLKR(subtotal);
+      totalElem.textContent = formatLKR(subtotal);
+
+      if (cart.length === 0) {
+        cartList.innerHTML = `
+          <div class="cart-empty-view">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <h4 style="color: #fff; margin-bottom: 0.5rem;">Your Cart is Empty</h4>
+            <p style="font-size: 0.85rem;">Equip your workbench with our precision multimeters, oscilloscopes, and components.</p>
+          </div>
+        `;
+        document.getElementById('cartFooter').style.display = 'none';
+        return;
+      }
+
+      document.getElementById('cartFooter').style.display = 'flex';
+
+      cartList.innerHTML = cart.map(item => {
+        const prod = products.find(p => p.id === item.productId);
+        if (!prod) return '';
+
+        const fallbackUrl = getFallbackImage(prod.category, prod.name);
+        const imgUrl = prod.image || fallbackUrl;
+
+        return `
+          <div class="cart-item">
+            <img src="${imgUrl}" alt="${prod.name}" class="cart-item-img" onerror="this.onerror=null; this.src='${fallbackUrl}'">
+            <div class="cart-item-details">
+              <div class="cart-item-title">${prod.name}</div>
+              <div class="cart-item-price">${formatLKR(prod.price)}</div>
+              <div class="cart-qty-ctrl">
+                <button class="qty-btn" onclick="updateCartQuantity('${prod.id}', ${item.quantity - 1})"><i class="fa-solid fa-minus"></i></button>
+                <span class="qty-val">${item.quantity}</span>
+                <button class="qty-btn" onclick="updateCartQuantity('${prod.id}', ${item.quantity + 1})"><i class="fa-solid fa-plus"></i></button>
+              </div>
+            </div>
+            <button class="cart-item-remove" onclick="removeFromCart('${prod.id}')" title="Remove item">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openCart() {
+      updateCartUI();
+      document.getElementById('cartDrawerOverlay').classList.add('active');
+      document.getElementById('cartDrawer').classList.add('active');
+    }
+
+    function closeCart() {
+      document.getElementById('cartDrawerOverlay').classList.remove('active');
+      document.getElementById('cartDrawer').classList.remove('active');
+    }
+
+    /* ==========================================================================
+       CHECKOUT & ORDER PLACEMENT
+       ========================================================================== */
+    function openCheckoutModal() {
+      const cart = getCart();
+      if (cart.length === 0) {
+        showToast('Your cart is empty! Add products before checkout.', 'fa-solid fa-triangle-exclamation');
+        return;
+      }
+      closeCart();
+
+      // Populate Checkout items and summary
+      const products = getProducts();
+      const listElem = document.getElementById('checkoutItemsList');
+      const subtotalElem = document.getElementById('checkoutSubtotal');
+      const grandTotalElem = document.getElementById('checkoutGrandTotal');
+
+      let subtotal = 0;
+      listElem.innerHTML = cart.map(item => {
+        const prod = products.find(p => p.id === item.productId);
+        if (!prod) return '';
+        const lineTotal = Number(prod.price) * item.quantity;
+        subtotal += lineTotal;
+        return `
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; padding-bottom: 0.4rem; border-bottom: 1px dashed rgba(255,255,255,0.06);">
+            <span style="color: var(--text-light); max-width: 170px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              ${item.quantity}× ${prod.name}
+            </span>
+            <span style="font-family: var(--font-mono); color: var(--electric-cyan);">${formatLKR(lineTotal)}</span>
+          </div>
+        `;
+      }).join('');
+
+      subtotalElem.textContent = formatLKR(subtotal);
+      grandTotalElem.textContent = formatLKR(subtotal);
+
+      // Pre-fill logged-in customer info if available
+      const currentCust = getCurrentCustomer();
+      if (currentCust) {
+        document.getElementById('custFullName').value = currentCust.name || '';
+        document.getElementById('custPhone').value = currentCust.phone || '';
+        document.getElementById('custEmail').value = currentCust.email || '';
+        document.getElementById('custAddress').value = currentCust.address || '';
+      }
+
+      openModal('checkoutModal');
+    }
+
+    function selectPaymentMethod(method) {
+      selectedPayment = method;
+      const codCard = document.getElementById('payMethodCOD');
+      const bankCard = document.getElementById('payMethodBank');
+      const bankInfo = document.getElementById('bankInfoBox');
+
+      if (method === 'Cash on Delivery') {
+        codCard.classList.add('active');
+        bankCard.classList.remove('active');
+        bankInfo.classList.remove('show');
+      } else {
+        bankCard.classList.add('active');
+        codCard.classList.remove('active');
+        bankInfo.classList.add('show');
+      }
+    }
+
+    function placeOrder() {
+      const name = document.getElementById('custFullName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const email = document.getElementById('custEmail').value.trim();
+      const address = document.getElementById('custAddress').value.trim();
+
+      if (!name || !phone || !email || !address) {
+        showToast('Please complete all delivery fields.', 'fa-solid fa-triangle-exclamation');
+        return;
+      }
+
+      const cart = getCart();
+      if (cart.length === 0) return;
+
+      const products = getProducts();
+      let orderItems = [];
+      let totalAmount = 0;
+
+      // Verify stock and prepare items
+      for (const item of cart) {
+        const prod = products.find(p => p.id === item.productId);
+        if (!prod) continue;
+        if (prod.stock < item.quantity) {
+          showToast(`Sorry, "${prod.name}" only has ${prod.stock} units in stock.`, 'fa-solid fa-triangle-exclamation');
+          return;
+        }
+        orderItems.push({
+          id: prod.id,
+          name: prod.name,
+          category: prod.category,
+          price: prod.price,
+          quantity: item.quantity,
+          image: prod.image || ''
+        });
+        totalAmount += Number(prod.price) * item.quantity;
+      }
+
+      // Generate unique Order ID
+      const orderId = 'WT-' + new Date().getFullYear() + '-' + Math.floor(10000 + Math.random() * 90000);
+      const newOrder = {
+        id: orderId,
+        date: new Date().toISOString(),
+        customer: {
+          name,
+          phone,
+          email,
+          address
+        },
+        items: orderItems,
+        subtotal: totalAmount,
+        shipping: 0,
+        total: totalAmount,
+        paymentMethod: selectedPayment,
+        status: 'Pending',
+        notes: 'Placed via Storefront'
+      };
+
+      // Decrement stock in products
+      orderItems.forEach(ordItem => {
+        const p = products.find(prod => prod.id === ordItem.id);
+        if (p) {
+          p.stock = Math.max(0, p.stock - ordItem.quantity);
+        }
+      });
+      localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
+
+      // Save order
+      const orders = getOrders();
+      orders.unshift(newOrder);
+      localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(orders));
+
+      // Clear Cart
+      saveCart([]);
+
+      // Close checkout modal
+      closeModal('checkoutModal');
+
+      // Populate confirmation modal
+      document.getElementById('confOrderNum').textContent = orderId;
+      document.getElementById('confDetailsCard').innerHTML = `
+        <div style="margin-bottom: 0.5rem;"><strong>Recipient:</strong> ${name} (${phone})</div>
+        <div style="margin-bottom: 0.5rem;"><strong>Delivery Address:</strong> ${address}</div>
+        <div style="margin-bottom: 0.5rem;"><strong>Payment Method:</strong> ${selectedPayment}</div>
+        <div style="margin-bottom: 0.5rem;"><strong>Items Count:</strong> ${orderItems.length} hardware unit(s)</div>
+        <div style="font-family: var(--font-mono); font-size: 1.1rem; color: var(--electric-cyan); font-weight: 700;">
+          Total Payable: ${formatLKR(totalAmount)}
+        </div>
+      `;
+
+      // Set up print area
+      setupPrintArea(newOrder);
+
+      openModal('orderConfirmModal');
+      renderProducts();
+    }
+
+    function setupPrintArea(order) {
+      const printDiv = document.getElementById('print-area');
+      printDiv.innerHTML = `
+        <div style="font-family: sans-serif; max-width: 700px; margin: 0 auto; color: #000;">
+          <div style="border-bottom: 2px solid #000; padding-bottom: 1rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between;">
+            <div>
+              <h1 style="margin: 0; font-size: 1.8rem;">WayaTronic</h1>
+              <p style="margin: 0; font-size: 0.9rem;">Your Trusted Electronic Test Equipment Store</p>
+              <p style="margin: 0; font-size: 0.8rem;">142 High Level Rd, Moratuwa / Colombo | +94 11 234 5678</p>
+            </div>
+            <div style="text-align: right;">
+              <h3 style="margin: 0;">OFFICIAL INVOICE</h3>
+              <p style="margin: 0; font-weight: bold;">${order.id}</p>
+              <p style="margin: 0; font-size: 0.85rem;">Date: ${new Date(order.date).toLocaleDateString()}</p>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 1.5rem;">
+            <h4>CUSTOMER DETAILS:</h4>
+            <p style="margin: 2px 0;"><strong>Name:</strong> ${order.customer.name}</p>
+            <p style="margin: 2px 0;"><strong>Phone:</strong> ${order.customer.phone}</p>
+            <p style="margin: 2px 0;"><strong>Email:</strong> ${order.customer.email}</p>
+            <p style="margin: 2px 0;"><strong>Address:</strong> ${order.customer.address}</p>
+            <p style="margin: 2px 0;"><strong>Payment:</strong> ${order.paymentMethod}</p>
+          </div>
+
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 1.5rem;">
+            <thead>
+              <tr style="border-bottom: 1px solid #000; text-align: left;">
+                <th style="padding: 6px;">Item Description</th>
+                <th style="padding: 6px; text-align: center;">Qty</th>
+                <th style="padding: 6px; text-align: right;">Unit Price (LKR)</th>
+                <th style="padding: 6px; text-align: right;">Total (LKR)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${order.items.map(item => `
+                <tr style="border-bottom: 1px solid #ddd;">
+                  <td style="padding: 6px;">${item.name}</td>
+                  <td style="padding: 6px; text-align: center;">${item.quantity}</td>
+                  <td style="padding: 6px; text-align: right;">${item.price.toLocaleString()}</td>
+                  <td style="padding: 6px; text-align: right;">${(item.price * item.quantity).toLocaleString()}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+
+          <div style="text-align: right; margin-bottom: 2rem;">
+            <p style="margin: 4px 0;"><strong>Grand Total: ${formatLKR(order.total)}</strong></p>
+          </div>
+
+          <p style="font-size: 0.8rem; text-align: center; border-top: 1px solid #aaa; padding-top: 1rem;">
+            Thank you for choosing WayaTronic. All test instruments carry 1-Year Official Warranty.
+          </p>
+        </div>
+      `;
+    }
+
+    function printReceipt() {
+      window.print();
+    }
+
+    /* ==========================================================================
+       CUSTOMER AUTHENTICATION (LOGIN / REGISTER)
+       ========================================================================== */
+    function switchAuthTab(tab) {
+      const tabLogin = document.getElementById('tabLogin');
+      const tabRegister = document.getElementById('tabRegister');
+      const formLogin = document.getElementById('loginForm');
+      const formRegister = document.getElementById('registerForm');
+
+      if (tab === 'login') {
+        tabLogin.classList.add('active');
+        tabRegister.classList.remove('active');
+        formLogin.style.display = 'block';
+        formRegister.style.display = 'none';
+      } else {
+        tabRegister.classList.add('active');
+        tabLogin.classList.remove('active');
+        formRegister.style.display = 'block';
+        formLogin.style.display = 'none';
+      }
+    }
+
+    function handleCustomerRegister() {
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim().toLowerCase();
+      const phone = document.getElementById('regPhone').value.trim();
+      const password = document.getElementById('regPassword').value;
+
+      if (!name || !email || !password) {
+        showToast('Please fill out all registration fields.', 'fa-solid fa-triangle-exclamation');
+        return;
+      }
+
+      const customers = JSON.parse(localStorage.getItem(STORAGE_KEYS.CUSTOMERS)) || [];
+      if (customers.some(c => c.email === email)) {
+        showToast('An account with this email already exists.', 'fa-solid fa-triangle-exclamation');
+        return;
+      }
+
+      const newCustomer = {
+        id: 'CUST-' + Math.floor(1000 + Math.random() * 9000),
+        name,
+        email,
+        phone,
+        password,
+        address: '',
+        registeredAt: new Date().toISOString()
+      };
+
+      customers.push(newCustomer);
+      localStorage.setItem(STORAGE_KEYS.CUSTOMERS, JSON.stringify(customers));
+      localStorage.setItem(STORAGE_KEYS.CURRENT_CUSTOMER, JSON.stringify(newCustomer));
+
+      closeModal('authModal');
+      updateNavAuthUI();
+      showToast(`Welcome to WayaTronic, ${name}!`, 'fa-solid fa-circle-check');
+    }
+
+    function handleCustomerLogin() {
+      const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+      const password = document.getElementById('loginPassword').value;
+
+      const customers = JSON.parse(localStorage.getItem(STORAGE_KEYS.CUSTOMERS)) || [];
+      const user = customers.find(c => c.email === email && c.password === password);
+
+      if (!user) {
+        showToast('Invalid email or password. Please try again.', 'fa-solid fa-triangle-exclamation');
+        return;
+      }
+
+      localStorage.setItem(STORAGE_KEYS.CURRENT_CUSTOMER, JSON.stringify(user));
+      closeModal('authModal');
+      updateNavAuthUI();
+      showToast(`Welcome back, ${user.name}!`, 'fa-solid fa-circle-check');
+    }
+
+    function handleCustomerLogout() {
+      localStorage.removeItem(STORAGE_KEYS.CURRENT_CUSTOMER);
+      updateNavAuthUI();
+      showToast('You have been logged out.', 'fa-solid fa-right-from-bracket');
+    }
+
+    function updateNavAuthUI() {
+      const container = document.getElementById('navAuthContainer');
+      const user = getCurrentCustomer();
+
+      if (user) {
+        const initials = user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        container.innerHTML = `
+          <div class="user-pill" id="userPillBtn" onclick="toggleUserDropdown(event)">
+            <div class="user-avatar">${initials}</div>
+            <span class="user-name">${user.name}</span>
+            <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; color: var(--text-muted);"></i>
+            <div class="user-dropdown" id="userDropdownMenu">
+              <a href="javascript:void(0)" class="user-dropdown-item" onclick="openMyOrdersModal()"><i class="fa-solid fa-box"></i> My Orders</a>
+              <a href="admin.html" class="user-dropdown-item"><i class="fa-solid fa-lock"></i> Staff Admin</a>
+              <div style="height: 1px; background: rgba(255,255,255,0.08); margin: 0.25rem 0;"></div>
+              <a href="javascript:void(0)" class="user-dropdown-item" style="color: #f87171;" onclick="handleCustomerLogout()"><i class="fa-solid fa-power-off"></i> Logout</a>
+            </div>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <button class="btn-auth" onclick="openModal('authModal')">
+            <i class="fa-regular fa-user"></i> <span>Sign In</span>
+          </button>
+        `;
+      }
+    }
+
+    function toggleUserDropdown(event) {
+      event.stopPropagation();
+      const menu = document.getElementById('userDropdownMenu');
+      if (menu) menu.classList.toggle('show');
+    }
+
+    window.addEventListener('click', () => {
+      const menu = document.getElementById('userDropdownMenu');
+      if (menu) menu.classList.remove('show');
+    });
+
+    /* ==========================================================================
+       MY ORDERS HISTORY VIEW
+       ========================================================================== */
+    function openMyOrdersModal() {
+      const user = getCurrentCustomer();
+      const allOrders = getOrders();
+      const ordersList = document.getElementById('myOrdersList');
+
+      // Filter orders by email if customer is logged in, else show latest orders placed on this machine
+      let customerOrders = user 
+        ? allOrders.filter(o => o.customer && o.customer.email.toLowerCase() === user.email.toLowerCase())
+        : allOrders;
+
+      if (customerOrders.length === 0) {
+        ordersList.innerHTML = `
+          <div style="text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
+            <i class="fa-solid fa-box-open" style="font-size: 3rem; color: var(--border-color); margin-bottom: 1rem;"></i>
+            <h4 style="color: #fff; margin-bottom: 0.5rem;">No Orders Found</h4>
+            <p style="font-size: 0.85rem;">You haven't placed any electronic hardware orders yet.</p>
+          </div>
+        `;
+      } else {
+        ordersList.innerHTML = customerOrders.map(order => {
+          const status = (order.status || 'Pending').toLowerCase();
+          return `
+            <div class="order-history-card">
+              <div class="order-card-header">
+                <div>
+                  <strong style="color: #fff; font-family: var(--font-mono);">${order.id}</strong>
+                  <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 0.5rem;">
+                    ${new Date(order.date).toLocaleDateString()}
+                  </span>
+                </div>
+                <span class="order-status-badge status-${status}">${order.status}</span>
+              </div>
+              <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.6rem;">
+                ${order.items.map(it => `${it.quantity}× ${it.name}`).join(', ')}
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.5rem;">
+                <span style="font-size: 0.82rem; color: var(--text-muted);">Payment: ${order.paymentMethod}</span>
+                <span style="font-family: var(--font-mono); font-weight: 700; color: var(--electric-cyan);">${formatLKR(order.total)}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      openModal('myOrdersModal');
+    }
+
+    /* ==========================================================================
+       MODAL CONTROLS
+       ========================================================================== */
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) modal.classList.remove('active');
+    }
+
+    // Close modal on background click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('active');
+        }
+      });
+    });
+
+    /* ==========================================================================
+       CONTACT FORM HANDLER
+       ========================================================================== */
+    function handleContactSubmit() {
+      const name = document.getElementById('contactName').value;
+      showToast(`Thank you ${name}! Your inquiry has been sent to our engineering team.`, 'fa-solid fa-paper-plane');
+      document.getElementById('contactForm').reset();
+    }
+
+    /* ==========================================================================
+       CROSS-TAB REAL-TIME SYNCHRONIZATION
+       ========================================================================== */
+    // Synchronize when admin makes changes in admin.html
+    window.addEventListener('storage', (e) => {
+      if (e.key === STORAGE_KEYS.PRODUCTS || e.key === STORAGE_KEYS.CATEGORIES) {
+        renderCategoryPills();
+        renderProducts();
+        updateCartUI();
+        showToast('Store catalog synchronized with latest admin updates!', 'fa-solid fa-arrows-rotate');
+      }
+      if (e.key === STORAGE_KEYS.CART) {
+        updateCartUI();
+      }
+      if (e.key === STORAGE_KEYS.CURRENT_CUSTOMER) {
+        updateNavAuthUI();
+      }
+    });
+
+    // Also sync on window focus
+    window.addEventListener('focus', () => {
+      renderCategoryPills();
+      renderProducts();
+      updateCartUI();
+      updateNavAuthUI();
+    });
+
+    /* ==========================================================================
+       DOM READY & EVENT BINDINGS
+       ========================================================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeStorage();
+      renderCategoryPills();
+      renderProducts();
+      updateCartUI();
+      updateNavAuthUI();
+
+      // Search bindings
+      const searchInput = document.getElementById('searchInput');
+      const searchClearBtn = document.getElementById('searchClearBtn');
+
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        searchClearBtn.style.display = searchQuery ? 'block' : 'none';
+        renderProducts();
+      });
+
+      searchClearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchQuery = '';
+        searchClearBtn.style.display = 'none';
+        renderProducts();
+        searchInput.focus();
+      });
+
+      // Sort & Stock Checkbox
+      document.getElementById('sortSelect').addEventListener('change', (e) => {
+        sortMethod = e.target.value;
+        renderProducts();
+      });
+
+      document.getElementById('inStockOnlyCheckbox').addEventListener('change', (e) => {
+        inStockOnly = e.target.checked;
+        renderProducts();
+      });
+
+      // Cart Drawer Toggle
+      document.getElementById('openCartBtn').addEventListener('click', openCart);
+
+      // Hero Showcase Quick Add button
+      const heroAddBtn = document.getElementById('heroShowcaseAddBtn');
+      if (heroAddBtn) {
+        heroAddBtn.addEventListener('click', () => {
+          addToCart('PROD-1001', 1);
+        });
+      }
+
+      // Mobile Menu Toggle
+      const mobileBtn = document.getElementById('mobileMenuBtn');
+      if (mobileBtn) {
+        mobileBtn.addEventListener('click', () => {
+          const links = document.querySelector('.nav-links');
+          const search = document.querySelector('.nav-search');
+          if (links.style.display === 'flex') {
+            links.style.display = 'none';
+            search.style.display = 'none';
+          } else {
+            links.style.display = 'flex';
+            links.style.flexDirection = 'column';
+            links.style.position = 'absolute';
+            links.style.top = '76px';
+            links.style.left = '0';
+            links.style.width = '100%';
+            links.style.background = 'var(--bg-navy)';
+            links.style.padding = '1.5rem';
+            links.style.boxShadow = 'var(--shadow-lg)';
+            search.style.display = 'block';
+            search.style.maxWidth = '100%';
+            search.style.margin = '1rem 0';
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
